@@ -14,6 +14,7 @@ let handleGetRequest = (req, res, controller) => {
     .then((result) => {
       res.send(result);
     })
+
     .catch((err) => {
       res.status(err.code || 500).send(err);
     });

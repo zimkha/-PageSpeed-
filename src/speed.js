@@ -11,10 +11,16 @@ const config = require('./config');
         .then((result) => {
           const { data } = result;
           console.log('All infoormation', data);
-           (async () => {
-              await this.SpeedToSlack
-              resolve(data)
-           })();
+          const web = new WebClient("xoxb-2256143285764-2247083733253-sFGl7MfRtvhKkswyyIkpP5Tq");
+          web.chat.postMessage({
+            channel: '#general',
+            text: `The current time is `,
+          })
+          .then((res) => {
+            resolve("Done");
+          }).catch((err) => {
+            reject(err);
+          });
           //resolve(data);
         }).catch((err) => {
           reject(err)
@@ -24,7 +30,20 @@ const config = require('./config');
      }
    })
    }
-
+ static SpeedTwo (url) {
+   return new Promise((resolve, reject) => {
+    const web = new WebClient(config.BotUserToken);
+    web.chat.postMessage({
+      channel: '#general',
+      text: `The current time is `,
+    })
+    .then((res) => {
+      resolve("Done");
+    }).catch((err) => {
+      reject(err);
+    });    
+   })
+ }
    static async  SpeedToSlack(){
     try {
       const web = new WebClient(config.BotUserToken);
