@@ -36,8 +36,6 @@ let handlePostRequest = (req, res, controller) => {
       }
     });
 };
-
-
 router.post(
   "/test-speed", (req, res) => handlePostRequest(req, res, SpeedController.Speed)
 );
