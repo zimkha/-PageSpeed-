@@ -1,35 +1,42 @@
 const speed = require('psi');
-
+const { WebClient } = require('@slack/web-api');
+const config = require('./config');
 
  class SpeedController {
    static async Speed (url) {
    return new Promise((resolve, reject) => {
-    speed(url)
-      .then((result) => {
-        const { data } = result;
-        console.log('All infoormation', data);
-        
-        resolve(data);
-      }).catch((err) => {
-        reject(err)
-      })
-      speed.output(url)
-        .then(() => {
-          resolve('Done')
+     try {
+      const web = new WebClient(config.BotUserToken);
+      speed(url)
+        .then((result) => {
+          const { data } = result;
+          console.log('All infoormation', data);
+           (async () => {
+              await this.SpeedToSlack
+              resolve(data)
+           })();
+          //resolve(data);
         }).catch((err) => {
           reject(err)
         })
-    // console.log('Speed score:', data.lighthouseResult.categories.performance.score);
-    
- 
-    //  await speed.output(url);
-    //  const data2 = await psi('https://theverge.com', {
-    //    nokey: 'true',
-    //    strategy: 'desktop'
-    //  });
-    //  return;
+     } catch (error) {
+        reject(erro)
+     }
    })
-   // console.log('Speed score:', data2);
+   }
+
+   static async  SpeedToSlack(){
+    try {
+      const web = new WebClient(config.BotUserToken);
+      await web.chat.postMessage({
+        channel: '#general',
+        text: `The current time is `,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  
+    console.log('Message posted!');
    }
  }
 
